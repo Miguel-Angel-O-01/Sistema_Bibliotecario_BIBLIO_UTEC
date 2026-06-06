@@ -1,0 +1,218 @@
+﻿@{
+    // Desactivamos el layout principal para tener una pantalla limpia estilo Amazon
+    Layout = null;
+    ViewData["Title"] = "Iniciar sesión - Biblio UTEC";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body { background-color: #fff; font-family: "Amazon Ember", Arial, sans-serif; }
+        .login-wrapper { max-width: 350px; margin: 0 auto; padding-top: 30px; }
+        .utec-logo { text-align: center; margin-bottom: 15px; font-size: 2rem; font-weight: 800; color: #111; text-decoration: none; display: block; letter-spacing: -1px; }
+        .utec-logo:hover { color: #111; text-decoration: none; }
+        
+        /* Tarjeta de Login */
+        .login-card { border: 1px solid #ddd; border-radius: 8px; padding: 20px 26px; margin-bottom: 20px; }
+        .login-card h1 { font-size: 1.75rem; font-weight: 400; margin-bottom: 15px; }
+        .form-control { border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1) inset; height: 35px; font-size: 0.9rem; }
+        .form-control:focus { border-color: #e77600; box-shadow: 0 0 3px rgba(228,121,17,.5); outline: none; }
+        
+        /* Botones */
+        .btn-amazon-yellow { background-color: #ffd814; border-color: #fcd200; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); width: 100%; padding: 6px; font-size: 0.9rem; font-weight: normal; }
+        .btn-amazon-yellow:hover { background-color: #f7ca00; }
+        .btn-create-account { background-color: #fff; border: 1px solid #d5d9d9; border-radius: 8px; width: 100%; padding: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(255,255,255,0.4) inset; color: #111; }
+        .btn-create-account:hover { background-color: #f7fafa; color: #111; text-decoration: none; }
+        
+        /* Separador */
+        .divider-text { display: flex; align-items: center; text-align: center; color: #767676; margin: 20px 0; font-size: 0.75rem; }
+        .divider-text::before, .divider-text::after { content: ''; flex: 1; border-bottom: 1px solid #e7e7e7; }
+        .divider-text::before { margin-right: .5em; }
+        .divider-text::after { margin-left: .5em; }
+        
+        /* Google Auth */
+        .btn-google { background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 6px; width: 100%; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; color: #555; font-weight: 500; }
+        .btn-google:hover { background-color: #f9f9f9; text-decoration: none; color: #333; }
+        .btn-google img { width: 18px; margin-right: 10px; }
+        
+        /* Switcher de Rol */
+        .role-switch { display: flex; background: #f3f3f3; border-radius: 8px; padding: 4px; margin-bottom: 20px; border: 1px solid #ddd; }
+        .role-btn { flex: 1; text-align: center; padding: 6px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; color: #555; transition: all 0.2s; }
+        .role-btn.active { background: #fff; font-weight: bold; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #ccc; }
+        
+        /* Footer minimalista */
+        .login-footer { text-align: center; font-size: 0.7rem; color: #555; padding-top: 20px; border-top: 1px solid #eee; margin-top: 30px; background: #fbfbfb; padding-bottom: 30px;}
+        .login-footer a { color: #007185; margin: 0 10px; text-decoration: none; }
+        .login-footer a:hover { color: #c45500; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <a href="/" class="utec-logo">BIBLIO-UTEC</a>
+        
+        <div class="login-card shadow-sm">
+            <h1>Iniciar sesión</h1>
+            
+            <div class="role-switch">
+                <div class="role-btn active" id="btnEstudiante" onclick="cambiarRol('Estudiante')">Estudiante</div>
+                <div class="role-btn" id="btnAdmin" onclick="cambiarRol('Admin')">Administrador</div>
+            </div>
+
+            <form action="/Account/Login" method="post">
+                <div class="form-group mb-3">
+                    <label class="font-weight-bold mb-1" style="font-size: 0.85rem;" id="lblCorreo">Correo electrónico institucional</label>
+                    <input type="email" class="form-control" placeholder="estudiante@utec.edu.sv" required>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="font-weight-bold mb-1" style="font-size: 0.85rem;">Contraseña</label>
+                        <a href="#" style="font-size: 0.8rem; color: #007185;">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <input type="password" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn btn-amazon-yellow mt-2">Continuar</button>
+            </form>
+            
+            <p class="mt-3 mb-0" style="font-size: 0.75rem; color: #111;">
+                Al continuar, aceptas las <a href="#" style="color: #007185;">Condiciones de uso</a> y el <a href="#" style="color: #007185;">Aviso de privacidad</a> de Biblio-UTEC.
+            </p>
+
+            <div class="divider-text">¿Eres nuevo estudiante?</div>
+            
+            <a href="/Account/Register" class="btn btn-create-account text-center">Crea tu cuenta de Biblio-UTEC</a>
+
+            <div class="divider-text">O inicia sesión con</div>
+
+            <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+            <div id="g_id_onload"
+            data-client_id="1073503065436-hnqtmjq61q0b83qgdajvisrt4rvhkvsq.apps.googleusercontent.com"
+            data-callback="manejarRespuestaGoogle"
+            data-auto_prompt="false">
+            </div>
+
+<div class="g_id_signin" 
+     data-type="standard" 
+     data-size="large" 
+     data-theme="outline" 
+     data-text="sign_in_with" 
+     data-shape="rectangular" 
+     data-logo_alignment="left"
+     style="width: 100%;">
+</div>
+
+<form id="googleLoginForm" action="/Account/GoogleLogin" method="POST" style="display: none;">
+    <input type="hidden" id="googleTokenInput" name="idToken" />
+</form>
+
+<script>
+    // Esta función se ejecuta automáticamente cuando eliges tu cuenta de Google en la ventana emergente
+    function manejarRespuestaGoogle(response) {
+        // response.credential contiene el JWT encriptado de Google
+        document.getElementById('googleTokenInput').value = response.credential;
+        // Enviamos el token a tu back-end para validarlo de forma segura
+        document.getElementById('googleLoginForm').submit();
+    }
+</script>
+        </div>
+    </div>
+
+   <div class="login-footer">
+    <div class="mb-2">
+        <a href="#" data-toggle="modal" data-target="#modalCondiciones">Condiciones de uso</a>
+        <a href="#" data-toggle="modal" data-target="#modalPrivacidad">Aviso de privacidad</a>
+        <a href="#" data-toggle="modal" data-target="#modalAyuda">Ayuda</a>
+    </div>
+    <p class="mb-0">&copy; 2026, Universidad Tecnológica de El Salvador</p>
+</div>
+
+    <script>
+        // Lógica visual para el Switch Mode
+        function cambiarRol(rol) {
+            const btnEstudiante = document.getElementById('btnEstudiante');
+            const btnAdmin = document.getElementById('btnAdmin');
+            const lblCorreo = document.getElementById('lblCorreo');
+
+            if(rol === 'Estudiante') {
+                btnEstudiante.classList.add('active');
+                btnAdmin.classList.remove('active');
+                lblCorreo.innerText = "Correo electrónico institucional";
+            } else {
+                btnAdmin.classList.add('active');
+                btnEstudiante.classList.remove('active');
+                lblCorreo.innerText = "Correo de Administrador / Staff";
+            }
+        }
+    </script>
+    <div class="modal fade" id="modalCondiciones" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Condiciones de Uso</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body text-dark" style="font-size: 0.95rem;">
+                <p>Bienvenido al Sistema de Gestión Bibliotecaria (Biblio-UTEC). Al utilizar nuestros servicios, aceptas las siguientes condiciones:</p>
+                <ol class="text-muted pl-3">
+                    <li class="mb-2"><strong>Uso de la cuenta:</strong> Eres responsable de mantener la confidencialidad de tu cuenta y contraseña.</li>
+                    <li class="mb-2"><strong>Préstamos y Devoluciones:</strong> Los libros físicos y digitales deben devolverse en los plazos estipulados para evitar sanciones académicas.</li>
+                    <li><strong>Propiedad Intelectual:</strong> Todo el contenido digital está protegido por derechos de autor y es para uso exclusivo educativo.</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPrivacidad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Aviso de Privacidad</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body text-dark" style="font-size: 0.95rem;">
+                <p>En Biblio-UTEC valoramos y protegemos tu información personal.</p>
+                <ul class="text-muted pl-3">
+                    <li class="mb-2">Tus datos (carnet, correo, historial de lectura) se utilizan únicamente para la gestión de la biblioteca.</li>
+                    <li>No compartimos tu información con terceros sin tu consentimiento explícito.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAyuda" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Centro de Ayuda</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body text-dark" style="font-size: 0.95rem;">
+                <p>¿Problemas para acceder a tu cuenta?</p>
+                <p class="text-muted small mb-0">Si eres estudiante de nuevo ingreso, asegúrate de que tu carnet esté activo en el sistema central de la universidad. Para asistencia técnica directa, escribe a soporte@utec.edu.sv o acércate a las oficinas de atención estudiantil.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-amazon-yellow px-4" data-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,693 @@
+﻿@model Sistema_Bibliotecario_BIBLIO_UTEC.Models.Libro
+@{ 
+    ViewData["Title"] = "Detalles del Libro";
+}
+
+<style>
+    /* Estilos Generales Amazon */
+    .text-amazon-blue { color: #007185; cursor: pointer; text-decoration: none; }
+    .text-amazon-blue:hover { color: #c45500; text-decoration: underline; }
+    .text-amazon-price { color: #B12704; font-size: 1.2rem; font-weight: 500; }
+    .divider { border-top: 1px solid #e7e7e7; margin: 15px 0; }
+    
+    /* Selector de Formatos y Buy Box */
+    .format-box { border: 1px solid #888c8c; border-radius: 4px; padding: 10px 15px; cursor: pointer; background-color: #fff; transition: all 0.2s; }
+    .format-box:hover { background-color: #f7fafa; }
+    .format-box.active { border-color: #e77600; background-color: #fdf8f3; box-shadow: 0 0 0 1px #e77600; }
+    .buy-box { border: 1px solid #d5d9d9; border-radius: 8px; padding: 18px; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .btn-amazon-yellow { background-color: #ffd814; border-color: #fcd200; color: #0f1111; border-radius: 50px; font-size: 0.9rem; padding: 8px 0; }
+    .btn-amazon-yellow:hover { background-color: #f7ca00; border-color: #f2c200; }
+    .btn-amazon-orange { background-color: #ffa41c; border-color: #ff8f00; color: #0f1111; border-radius: 50px; font-size: 0.9rem; padding: 8px 0; }
+    .btn-amazon-orange:hover { background-color: #fa8900; border-color: #e67a00; }
+    
+    /* Especificaciones Horizontales */
+    .specs-scroller { display: flex; overflow-x: auto; gap: 20px; padding: 15px 0; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+    .spec-item { min-width: 120px; text-align: center; font-size: 0.85rem; border-right: 1px solid #eee; padding-right: 20px; }
+    .spec-item:last-child { border-right: none; }
+    .spec-icon { color: #555; font-size: 1.5rem; margin-bottom: 5px; }
+    
+    /* Reseñas y Barras de progreso */
+    .review-bar-container { display: flex; align-items: center; margin-bottom: 5px; cursor: pointer; }
+    .progress-amazon { height: 14px; border-radius: 4px; border: 1px solid #888c8c; background-color: #f3f3f3; flex-grow: 1; margin: 0 10px; overflow: hidden; }
+    .progress-bar-amazon { background-color: #ffa41c; height: 100%; border-right: 1px solid #888c8c; }
+    .star-rating-interactive i { cursor: pointer; color: #ccc; transition: color 0.2s; }
+    .star-rating-interactive i.active { color: #ffa41c; }
+
+    /* Carruseles Inferiores */
+    .shelf-title-amazon { font-size: 1.3rem; font-weight: 700; color: #111; margin-bottom: 20px; }
+    .book-card-amazon { text-align: left; transition: transform 0.2s; border: 1px solid #ddd !important; border-radius: 4px; }
+    .book-card-amazon:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; }
+    .book-cover-img { height: 200px; width: 100%; object-fit: contain; background-color: #f8f9fa; }
+    .history-item-carousel { text-align: center; padding: 5px; transition: transform 0.2s; }
+    .history-item-carousel:hover { transform: translateY(-3px); }
+    .history-cover-img { height: 120px; width: 80px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 2px; display: inline-block; }
+    .carousel-control-prev, .carousel-control-next { width: 45px; background-color: rgba(255,255,255,0.95); border: 1px solid #d5d9d9; height: 80px; top: 35%; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); opacity: 1 !important; z-index: 10; }
+    .carousel-control-prev:hover, .carousel-control-next:hover { background-color: #f7fafa; border-color: #a2a6a6; }
+    .carousel-arrow-icon { color: #0f1111; font-size: 1.3rem; line-height: 80px; }
+</style>
+
+<div class="container-fluid px-5 my-4">
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <img src="@(string.IsNullOrEmpty(Model.PortadaUrl) ? "https://via.placeholder.com/300x450?text=Sin+Portada" : Model.PortadaUrl)" alt="@Model.Titulo" class="img-fluid shadow-sm mb-3" style="max-height: 500px;" id="mainBookCover">
+        </div>
+
+        <div class="col-md-6 px-4">
+            <h2 class="font-weight-bold mb-1" id="mainBookTitle">@Model.Titulo</h2>
+            <p class="mb-1 text-muted" style="font-size: 1.1rem;">
+                por <a href="#" class="text-amazon-blue">@Model.Autor</a> (Autor)
+            </p>
+            
+            <div class="d-flex align-items-center mb-2">
+                <div class="text-warning mr-2" style="font-size: 1rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="#seccionOpiniones" class="text-amazon-blue small mr-3">142 calificaciones</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="d-flex mb-3" style="gap: 15px;">
+                <div id="btnFormatDigital" class="format-box active d-flex flex-column" style="min-width: 120px;" onclick="seleccionarFormato('digital')">
+                    <strong class="text-dark">Catálogo Digital</strong>
+                    <span class="text-amazon-price mt-1">Gratis</span>
+                    <span class="text-muted small">Préstamo UTEC</span>
+                </div>
+                <div id="btnFormatFisico" class="format-box d-flex flex-column" style="min-width: 120px;" onclick="seleccionarFormato('fisico')">
+                    <strong class="text-dark">Libro Físico</strong>
+                    <span class="text-amazon-price mt-1" id="mainBookPrice">US$ 24.99</span>
+                    <span class="text-muted small">Nuevo</span>
+                </div>
+            </div>
+
+            <h5 class="font-weight-bold mt-4">Descripción del libro</h5>
+            <p class="text-dark" style="font-size: 0.95rem; line-height: 1.5;">
+                Creado por la NASA para estudiantes de ingeniería y ciencias exactas, este volumen ofrece una colección inigualable de problemas matemáticos relacionados con el diseño aeronáutico.
+            </p>
+
+            <div class="specs-scroller mt-4">
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-book-open"></i></div>
+                    <span class="d-block text-muted">Páginas</span>
+                    <strong class="text-dark">208 páginas</strong>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-globe"></i></div>
+                    <span class="d-block text-muted">Idioma</span>
+                    <strong class="text-dark">Inglés</strong>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-building"></i></div>
+                    <span class="d-block text-muted">Editorial</span>
+                    <strong class="text-dark">Dover Publications</strong>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="far fa-calendar-alt"></i></div>
+                    <span class="d-block text-muted">Publicación</span>
+                    <strong class="text-dark">18 Dic 2013</strong>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-barcode"></i></div>
+                    <span class="d-block text-muted">ISBN-10</span>
+                    <strong class="text-dark">0486490335</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="buy-box">
+                <h5 id="precioCaja" class="text-amazon-price mb-2">Gratis con Préstamo UTEC</h5>
+                <p id="descripcionCaja" class="text-dark small mb-3">Disponible instantáneamente en tu cuenta mediante el Catálogo Digital.</p>
+                <p id="estadoCaja" class="text-success small font-weight-bold mb-3"><i class="fas fa-check-circle"></i> Disponible para préstamo</p>
+
+                <div id="selectorCantidad" class="d-flex align-items-center mb-3" style="display: none !important;">
+                    <label class="mr-2 mb-0 small">Cantidad:</label>
+                    <select class="form-control form-control-sm text-center" style="width: 60px; border-radius: 4px;" id="inputCantidad">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+
+                <button id="btnAgregarCarrito" class="btn btn-amazon-yellow font-weight-bold w-100 mb-2 shadow-sm" style="display: none;" onclick="simularAgregarCarrito('compra', 24.99)">
+                    Agregar al carrito
+                </button>
+                <button id="btnComprarAhora" class="btn btn-amazon-orange font-weight-bold w-100 mb-3 shadow-sm" style="display: none;" onclick="window.location.href='/Checkout/Pago'">
+                    Comprar ahora
+                </button>
+                <button id="btnPrestar" class="btn btn-amazon-orange font-weight-bold w-100 mb-3 shadow-sm" onclick="simularAgregarCarrito('prestamo', 0)">
+                    Prestar ahora
+                </button>
+
+                <div id="infoDevolucionDigital" class="mt-3 mb-3 text-muted" style="font-size: 0.8rem;">
+                    <div class="row m-0 mb-1">
+                        <div class="col-5 p-0">Devoluciones</div>
+                        <div class="col-7 p-0">
+                            <a href="#" class="text-amazon-blue" data-toggle="modal" data-target="#modalDevoluciones">Políticas de préstamo (30 días)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="infoEnvioFisico" class="mt-3 mb-3 text-muted" style="font-size: 0.8rem; display: none;">
+                    <div class="row m-0 mb-1"><div class="col-5 p-0">Remitente</div><div class="col-7 p-0 text-dark font-weight-bold">Biblio-UTEC</div></div>
+                    <div class="row m-0 mb-1"><div class="col-5 p-0">Vendedor</div><div class="col-7 p-0 text-dark font-weight-bold">Librería Universitaria</div></div>
+                </div>
+
+                <div class="text-center mt-2 mb-3">
+                    <i class="fas fa-lock text-muted small mr-1"></i>
+                    <a href="#" class="text-amazon-blue small" data-toggle="modal" data-target="#modalSeguridad">Transacción segura UTEC</a>
+                </div>
+
+                <div class="divider"></div>
+                <div class="dropdown">
+                    <button class="btn btn-light border w-100 text-left small shadow-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        Añadir a Mis Listas
+                    </button>
+                    <div class="dropdown-menu w-100">
+                        <a class="dropdown-item small" href="#">📋 Lista de Deseos</a>
+                        <a class="dropdown-item small" href="#">📚 Para mis clases</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="divider my-4"></div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h4 class="font-weight-bold mb-4">Comprados juntos habitualmente</h4>
+            <div class="d-flex align-items-center flex-wrap">
+                <img src="https://covers.openlibrary.org/b/isbn/9780486490335-M.jpg" alt="Space Math" class="shadow-sm" style="height: 120px;">
+                <i class="fas fa-plus mx-4 text-muted fa-lg"></i>
+                <img src="https://covers.openlibrary.org/b/isbn/9780486497044-M.jpg" alt="Astrodynamics" class="shadow-sm" style="height: 120px;">
+                <i class="fas fa-plus mx-4 text-muted fa-lg"></i>
+                <img src="https://covers.openlibrary.org/b/isbn/9781118392517-M.jpg" alt="Spacecraft Systems" class="shadow-sm" style="height: 120px;">
+                
+                <div class="ml-5">
+                    <p class="mb-1 text-dark">Precio total: <strong class="text-amazon-price" id="totalJuntos">US$ 113.66</strong></p>
+                    <button class="btn btn-amazon-yellow font-weight-bold px-4 py-2 shadow-sm" onclick="simularAgregarCarrito('multiple', 113.66)">
+                        Agregar los seleccionados
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-4 text-dark" style="font-size: 0.95rem;">
+                <div class="mb-2">
+                    <input type="checkbox" checked id="chk1" onclick="actualizarTotalJuntos()"> 
+                    <strong>Este producto:</strong> Space Mathematics <span class="text-amazon-price small ml-1">US$ 24.99</span>
+                </div>
+                <div class="mb-2">
+                    <input type="checkbox" checked id="chk2" onclick="actualizarTotalJuntos()"> 
+                    <a href="#" class="text-amazon-blue">Fundamentals of Astrodynamics</a> <span class="text-amazon-price small ml-1">US$ 18.69</span>
+                </div>
+                <div class="mb-2">
+                    <input type="checkbox" checked id="chk3" onclick="actualizarTotalJuntos()"> 
+                    <a href="#" class="text-amazon-blue">Spacecraft Systems Engineering</a> <span class="text-amazon-price small ml-1">US$ 69.98</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider my-4"></div>
+
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h4 class="font-weight-bold mb-4 text-left">Más información del producto</h4>
+            <div class="row mt-4">
+                <div class="col-md-4 px-4">
+                    <img src="https://covers.openlibrary.org/b/isbn/9780486490335-L.jpg" class="img-fluid mb-3" style="max-height: 250px;">
+                    <p class="text-muted small">Desarrollado en la Academia de la Fuerza Aérea de EE. UU., este texto se utiliza ampliamente en la comunidad aeroespacial.</p>
+                </div>
+                <div class="col-md-4 px-4 d-flex align-items-center justify-content-center">
+                    <h2 class="font-weight-bold text-dark">Completely revised and updated</h2>
+                </div>
+                <div class="col-md-4 px-4">
+                    <div class="bg-dark text-white p-4 h-100 d-flex flex-column justify-content-center align-items-center rounded shadow">
+                        <h3 class="font-weight-bold mb-3">Easy to Follow Format</h3>
+                        <p class="small text-center">Problemas de ejemplo y ejercicios aparecen a lo largo de todo el texto, facilitando el autoaprendizaje.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider my-4"></div>
+
+    <div class="row mb-5" id="seccionOpiniones">
+        <div class="col-md-4">
+            <h4 class="font-weight-bold mb-3">Opiniones de clientes</h4>
+            <div class="d-flex align-items-center mb-1">
+                <div class="text-warning mr-2" style="font-size: 1.2rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <span class="font-weight-bold" style="font-size: 1.2rem;">4.7 de 5</span>
+            </div>
+            
+            <div class="review-bar-container mt-3">
+                <span class="text-amazon-blue small" style="width: 60px;">5 estrellas</span>
+                <div class="progress-amazon"><div class="progress-bar-amazon" style="width: 81%;"></div></div>
+                <span class="text-amazon-blue small text-right" style="width: 40px;">81%</span>
+            </div>
+            <div class="review-bar-container">
+                <span class="text-amazon-blue small" style="width: 60px;">4 estrellas</span>
+                <div class="progress-amazon"><div class="progress-bar-amazon" style="width: 13%;"></div></div>
+                <span class="text-amazon-blue small text-right" style="width: 40px;">13%</span>
+            </div>
+
+            <div class="divider my-4"></div>
+            <h5 class="font-weight-bold">Escribir opinión de este producto</h5>
+            <p class="text-muted small">Comparte tu opinión con otros clientes</p>
+            <button class="btn btn-light border w-100 py-2 shadow-sm rounded-pill" data-toggle="modal" data-target="#modalOpinion">
+                Escribir mi opinión
+            </button>
+        </div>
+
+        <div class="col-md-8 pl-md-5" id="listaOpiniones">
+            <h5 class="font-weight-bold mb-4">Las mejores opiniones</h5>
+            
+            <div class="mb-4 opinion-item">
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-circle fa-2x text-secondary mr-2"></i>
+                    <span class="text-dark font-weight-bold small ml-2">Edward Karhu</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                    <span class="text-warning small mr-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                    <strong class="text-dark" style="font-size: 0.95rem;">Expanded my mind</strong>
+                </div>
+                <p class="text-dark" style="font-size: 0.95rem;">If you love science this is a wonderful read.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider my-5"></div>
+
+    <h4 class="shelf-title-amazon mb-4">Libros relacionados en Ingeniería y Software</h4>
+    <div id="carouselRelacionados" class="carousel slide mb-5" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-lg-2 col-md-4 col-6 mb-3">
+                        <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                            <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" class="card-img-top p-3 book-cover-img" alt="Clean Code"></a>
+                            <div class="card-body p-2">
+                                <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">Clean Code</h6></a>
+                                <p class="text-muted small mb-1">Robert C. Martin</p>
+                                <strong class="d-block">US$ 14.99</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6 mb-3">
+                        <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                            <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780201835953-L.jpg" class="card-img-top p-3 book-cover-img" alt="Mythical Man-Month"></a>
+                            <div class="card-body p-2">
+                                <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">Mythical Man-Month</h6></a>
+                                <p class="text-muted small mb-1">Frederick P. Brooks</p>
+                                <strong class="d-block">US$ 12.50</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-12 text-center p-5 text-muted">Más libros relacionados cargando...</div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselRelacionados" role="button" data-slide="prev"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+        <a class="carousel-control-next" href="#carouselRelacionados" role="button" data-slide="next"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+    </div>
+
+    <h4 class="shelf-title-amazon mb-4">Inspirado en tu historial de búsqueda</h4>
+    <div id="carouselHistorialDetalle" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780439136358-M.jpg" class="history-cover-img" alt="Harry Potter"></a></div>
+                    <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780156012195-M.jpg" class="history-cover-img" alt="El Principito"></a></div>
+                    <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9788420412146-M.jpg" class="history-cover-img" alt="Don Quijote"></a></div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                     <div class="col-12 text-center p-4 text-muted">Cargando historial anterior...</div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselHistorialDetalle" role="button" data-slide="prev" style="height: 60px; top: 20%;"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+        <a class="carousel-control-next" href="#carouselHistorialDetalle" role="button" data-slide="next" style="height: 60px; top: 20%;"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDevoluciones" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold"><i class="fas fa-undo-alt text-info mr-2"></i> Políticas de Préstamo Digital</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body text-dark" style="font-size: 0.95rem;">
+                <p>Al adquirir un préstamo digital mediante el Catálogo de Biblio-UTEC, aceptas las siguientes condiciones:</p>
+                <ul class="text-muted">
+                    <li class="mb-2">El libro estará disponible en tu dispositivo durante un periodo máximo de <strong>30 días naturales</strong>.</li>
+                    <li class="mb-2">Una vez vencido el plazo, el sistema revocará el acceso automáticamente, simulando una devolución (reintegro).</li>
+                    <li>Si necesitas más tiempo, podrás solicitar una renovación desde tu panel de "Mis Préstamos Activos", siempre y cuando no haya lista de espera.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSeguridad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold"><i class="fas fa-shield-alt text-success mr-2"></i> Transacción Segura UTEC</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body text-dark" style="font-size: 0.95rem;">
+                <p>Tu seguridad es nuestra prioridad. Trabajamos duro para proteger tu seguridad y privacidad.</p>
+                <ul class="text-muted">
+                    <li class="mb-2">Nuestro sistema de seguridad encripta tu información durante la transmisión.</li>
+                    <li>Todas las transacciones son procesadas bajo los estándares de la Universidad Tecnológica.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalOpinion" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Escribir una opinión</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-4">
+                    <label class="font-weight-bold">Calificación general</label>
+                    <div class="star-rating-interactive" style="font-size: 1.8rem;" id="selectorEstrellas">
+                        <i class="fas fa-star" onclick="marcarEstrellas(1)"></i>
+                        <i class="fas fa-star" onclick="marcarEstrellas(2)"></i>
+                        <i class="fas fa-star" onclick="marcarEstrellas(3)"></i>
+                        <i class="fas fa-star" onclick="marcarEstrellas(4)"></i>
+                        <i class="fas fa-star" onclick="marcarEstrellas(5)"></i>
+                    </div>
+                    <input type="hidden" id="inputPuntuacion" value="5">
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">Añadir un título</label>
+                    <input type="text" class="form-control" id="inputTituloResena" placeholder="¿Qué es lo más importante que debes saber?">
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">Añadir una reseña escrita</label>
+                    <textarea class="form-control" rows="4" id="inputTextResena" placeholder="¿Qué te ha gustado o no te ha gustado?"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-amazon-yellow rounded-pill px-4" onclick="publicarOpinion()">Enviar opinión</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 1. FORMATOS (Intercambia qué textos y botones se ven)
+        function seleccionarFormato(formato) {
+            const btnDigital = document.getElementById('btnFormatDigital');
+            const btnFisico = document.getElementById('btnFormatFisico');
+            
+            const infoDevolucionDigital = document.getElementById('infoDevolucionDigital');
+            const infoEnvioFisico = document.getElementById('infoEnvioFisico');
+            
+            if (formato === 'digital') {
+                btnDigital.classList.add('active');
+                btnFisico.classList.remove('active');
+                
+                document.getElementById('btnPrestar').style.display = 'block';
+                document.getElementById('btnAgregarCarrito').style.display = 'none';
+                document.getElementById('btnComprarAhora').style.display = 'none';
+                document.getElementById('selectorCantidad').style.setProperty('display', 'none', 'important');
+                
+                infoDevolucionDigital.style.display = 'block'; // Muestra devoluciones en digital
+                infoEnvioFisico.style.display = 'none'; // Oculta remitente
+                
+                document.getElementById('precioCaja').innerText = 'Gratis con Préstamo UTEC';
+                document.getElementById('descripcionCaja').innerText = 'Disponible instantáneamente en tu cuenta mediante el Catálogo Digital.';
+                document.getElementById('estadoCaja').innerHTML = '<i class="fas fa-check-circle"></i> Disponible para préstamo';
+                document.getElementById('estadoCaja').className = 'text-success small font-weight-bold mb-3';
+                
+            } else if (formato === 'fisico') {
+                btnFisico.classList.add('active');
+                btnDigital.classList.remove('active');
+                
+                document.getElementById('btnPrestar').style.display = 'none';
+                document.getElementById('btnAgregarCarrito').style.display = 'block';
+                document.getElementById('btnComprarAhora').style.display = 'block';
+                document.getElementById('selectorCantidad').style.setProperty('display', 'flex', 'important');
+                
+                infoDevolucionDigital.style.display = 'none'; // Oculta devoluciones de digital
+                infoEnvioFisico.style.display = 'block'; // Muestra remitente físico
+                
+                document.getElementById('precioCaja').innerText = 'US$ 24.99';
+                document.getElementById('descripcionCaja').innerText = 'Libro físico nuevo. Envío disponible a través de la Universidad.';
+                document.getElementById('estadoCaja').innerHTML = '<i class="fas fa-box"></i> En Stock. Cantidad limitada.';
+                document.getElementById('estadoCaja').className = 'text-danger small font-weight-bold mb-3';
+            }
+        }
+
+        // 2. COMPRADOS JUNTOS (Actualiza el precio texto)
+        function actualizarTotalJuntos() {
+            let total = 0;
+            if(document.getElementById('chk1').checked) total += 24.99;
+            if(document.getElementById('chk2').checked) total += 18.69;
+            if(document.getElementById('chk3').checked) total += 69.98;
+            document.getElementById('totalJuntos').innerText = 'US$ ' + total.toFixed(2);
+        }
+
+      // 3. LÓGICA DEL CARRITO (Nivel QA)
+        function simularAgregarCarrito(tipo, precioUnitario) {
+            const badgeCarrito = document.querySelector('.fa-shopping-basket').nextElementSibling;
+            const spanSubtotalNav = document.getElementById('subtotalCarritoNav');
+            const listaItems = document.getElementById('listaItemsCarrito');
+            const mensajeVacio = document.getElementById('mensajeCarritoVacio');
+
+            let cantidadSeleccionada = 0;
+            let tituloAgregado = document.getElementById('mainBookTitle').innerText;
+            let portadaAgregada = document.getElementById('mainBookCover').src;
+            let costoTotalOperacion = 0;
+
+            if(tipo === 'compra') {
+                cantidadSeleccionada = parseInt(document.getElementById('inputCantidad').value);
+                costoTotalOperacion = precioUnitario * cantidadSeleccionada;
+            } else if (tipo === 'prestamo') {
+                cantidadSeleccionada = 1;
+                costoTotalOperacion = 0;
+            } else if (tipo === 'multiple') {
+                if(document.getElementById('chk1').checked) cantidadSeleccionada++;
+                if(document.getElementById('chk2').checked) cantidadSeleccionada++;
+                if(document.getElementById('chk3').checked) cantidadSeleccionada++;
+                if(cantidadSeleccionada === 0) { alert("Selecciona al menos un libro."); return; }
+                costoTotalOperacion = precioUnitario;
+                tituloAgregado = `Paquete de ${cantidadSeleccionada} libros`;
+            }
+
+            // Ocultar mensaje de carrito vacío si existe
+            if(mensajeVacio) mensajeVacio.style.display = 'none';
+
+            // Actualizar burbuja superior
+            if(badgeCarrito) {
+                let cantidadActual = parseInt(badgeCarrito.innerText) || 0;
+                badgeCarrito.innerText = cantidadActual + cantidadSeleccionada;
+                badgeCarrito.style.transform = 'scale(1.5)';
+                setTimeout(() => badgeCarrito.style.transform = 'scale(1)', 300);
+            }
+
+            // Actualizar Subtotal Dinámico
+            if(spanSubtotalNav) {
+                let dineroActual = parseFloat(spanSubtotalNav.innerText) || 0.00;
+                let nuevoSubtotal = dineroActual + costoTotalOperacion;
+                spanSubtotalNav.innerText = nuevoSubtotal.toFixed(2);
+                spanSubtotalNav.style.color = "#ffa41c";
+                setTimeout(() => spanSubtotalNav.style.color = "", 500);
+            }
+
+            // Generar controles +/- solo para compras físicas
+            let controlesCantidad = '';
+            if(tipo === 'compra') {
+                controlesCantidad = `
+                <div class="d-flex align-items-center mt-1">
+                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" style="border-radius: 4px 0 0 4px;" onclick="cambiarCantidadCarrito(this, -1, ${precioUnitario})">-</button>
+                    <input type="text" value="${cantidadSeleccionada}" class="form-control form-control-sm text-center py-0 px-1 item-cantidad" style="width: 35px; border-radius: 0; height: 26px;" readonly>
+                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" style="border-radius: 0 4px 4px 0;" onclick="cambiarCantidadCarrito(this, 1, ${precioUnitario})">+</button>
+                </div>`;
+            }
+
+            let etiquetaTipo = (tipo === 'prestamo') ? '<span class="badge badge-success small">Préstamo</span>' : '<span class="badge badge-secondary small">Físico</span>';
+            let precioTexto = (tipo === 'prestamo') ? 'Gratis' : `US$ ${costoTotalOperacion.toFixed(2)}`;
+
+            // Atributos de datos (data-precio) para que la función Eliminar sepa cuánto restar
+            const nuevoItemHTML = `
+            <div class="d-flex mb-3 border-top pt-3 item-carrito-fila" data-precio-unitario="${tipo === 'prestamo' ? 0 : precioUnitario}">
+                <img src="${portadaAgregada}" alt="Portada" class="mr-3 shadow-sm" style="width: 40px; height: 60px; object-fit: cover;">
+                <div class="flex-grow-1">
+                    <h6 class="mb-1 text-truncate" style="max-width: 170px; font-size: 0.85rem;">${tituloAgregado}</h6>
+                    ${etiquetaTipo}
+                    ${controlesCantidad}
+                </div>
+                <div class="text-right d-flex flex-column justify-content-between">
+                    <strong style="font-size: 0.9rem;" class="precio-item-texto">${precioTexto}</strong>
+                    <a href="javascript:void(0)" class="text-danger small mt-2" onclick="eliminarItemCarrito(this)">Eliminar</a>
+                </div>
+            </div>`;
+            
+            if(listaItems) listaItems.insertAdjacentHTML('beforeend', nuevoItemHTML);
+
+            if(tipo === 'prestamo') alert("¡Préstamo digital procesado!");
+            else if (tipo === 'multiple') alert("¡Se agregó el paquete al carrito!");
+            else alert("¡Se agregaron libros físicos al carrito!");
+        }
+
+        // FUNCIÓN: Sumar o restar cantidades
+        function cambiarCantidadCarrito(btn, delta, precioUnitario) {
+            const fila = btn.closest('.item-carrito-fila');
+            const inputElement = fila.querySelector('.item-cantidad');
+            const precioTexto = fila.querySelector('.precio-item-texto');
+            let cantidadActual = parseInt(inputElement.value);
+            
+            // Evitamos que baje a cero o números negativos
+            if (cantidadActual + delta < 1) return;
+            
+            inputElement.value = cantidadActual + delta;
+
+            // Actualizamos el precio individual de ese libro
+            const nuevoPrecioFila = (cantidadActual + delta) * precioUnitario;
+            precioTexto.innerText = `US$ ${nuevoPrecioFila.toFixed(2)}`;
+
+            // Actualizamos burbuja general
+            const badgeCarrito = document.querySelector('.fa-shopping-basket').nextElementSibling;
+            if(badgeCarrito) badgeCarrito.innerText = parseInt(badgeCarrito.innerText) + delta;
+
+            // Actualizamos Subtotal General
+            const spanSubtotalNav = document.getElementById('subtotalCarritoNav');
+            if(spanSubtotalNav) {
+                let dineroActual = parseFloat(spanSubtotalNav.innerText) || 0.00;
+                let nuevoSubtotal = dineroActual + (precioUnitario * delta);
+                spanSubtotalNav.innerText = nuevoSubtotal.toFixed(2);
+                spanSubtotalNav.style.color = "#ffa41c";
+                setTimeout(() => spanSubtotalNav.style.color = "", 500);
+            }
+        }
+
+        // NUEVA FUNCIÓN: Eliminar item completamente y restar del total
+        function eliminarItemCarrito(btnEliminar) {
+            const fila = btnEliminar.closest('.item-carrito-fila');
+            const precioUnitario = parseFloat(fila.getAttribute('data-precio-unitario')) || 0;
+            
+            // Leemos la cantidad que tenía el libro para restar todo junto
+            const inputElement = fila.querySelector('.item-cantidad');
+            let cantidadRestar = inputElement ? parseInt(inputElement.value) : 1;
+            let dineroRestar = precioUnitario * cantidadRestar;
+
+            // Restar de la burbuja
+            const badgeCarrito = document.querySelector('.fa-shopping-basket').nextElementSibling;
+            if(badgeCarrito) {
+                let nuevaCant = parseInt(badgeCarrito.innerText) - cantidadRestar;
+                badgeCarrito.innerText = nuevaCant < 0 ? 0 : nuevaCant;
+            }
+
+            // Restar del Subtotal General
+            const spanSubtotalNav = document.getElementById('subtotalCarritoNav');
+            if(spanSubtotalNav) {
+                let dineroActual = parseFloat(spanSubtotalNav.innerText) || 0.00;
+                let nuevoSubtotal = dineroActual - dineroRestar;
+                spanSubtotalNav.innerText = nuevoSubtotal <= 0 ? "0.00" : nuevoSubtotal.toFixed(2);
+            }
+
+            // Eliminar la fila del HTML
+            fila.remove();
+
+            // Si ya no quedan libros, volvemos a mostrar el mensaje de "Carrito Vacío"
+            const listaItems = document.getElementById('listaItemsCarrito');
+            const itemsRestantes = listaItems.querySelectorAll('.item-carrito-fila').length;
+            if (itemsRestantes === 0) {
+                const mensajeVacio = document.getElementById('mensajeCarritoVacio');
+                if(mensajeVacio) mensajeVacio.style.display = 'block';
+            }
+        }
+
+        // NUEVA FUNCIÓN: Para que los botones + y - del carrito funcionen
+        function cambiarCantidadCarrito(btn, delta, precioUnitario) {
+            const inputElement = btn.parentElement.querySelector('.item-cantidad');
+            let cantidadActual = parseInt(inputElement.value);
+            
+            // Evitar que baje a cero (para eliminar está el botón "Eliminar")
+            if (cantidadActual + delta < 1) return;
+            
+            inputElement.value = cantidadActual + delta;
+
+            // Actualizar burbuja
+            const badgeCarrito = document.querySelector('.fa-shopping-basket').nextElementSibling;
+            if(badgeCarrito) {
+                badgeCarrito.innerText = parseInt(badgeCarrito.innerText) + delta;
+            }
+
+            // Actualizar Subtotal General
+            const spanSubtotalNav = document.getElementById('subtotalCarritoNav');
+            if(spanSubtotalNav) {
+                let dineroActual = parseFloat(spanSubtotalNav.innerText) || 0.00;
+                let nuevoSubtotal = dineroActual + (precioUnitario * delta);
+                spanSubtotalNav.innerText = nuevoSubtotal.toFixed(2);
+                
+                spanSubtotalNav.style.color = "#ffa41c";
+                setTimeout(() => spanSubtotalNav.style.color = "", 500);
+            }
+        }
+
+        // 4. RESEÑAS INTERACTIVAS
+        function marcarEstrellas(cantidad) {
+            document.getElementById('inputPuntuacion').value = cantidad;
+            const estrellas = document.getElementById('selectorEstrellas').children;
+            for(let i = 0; i < 5; i++) {
+                if(i < cantidad) {
+                    estrellas[i].classList.remove('far'); 
+                    estrellas[i].classList.add('fas', 'active'); 
+                } else {
+                    estrellas[i].classList.remove('fas', 'active');
+                    estrellas[i].classList.add('far');
+                }
+            }
+        }
+
+        function publicarOpinion() {
+            const titulo = document.getElementById('inputTituloResena').value || "Sin título";
+            const texto = document.getElementById('inputTextResena').value || "El usuario no dejó un comentario escrito.";
+            const puntos = parseInt(document.getElementById('inputPuntuacion').value);
+            
+            let estrellasHTML = '';
+            for(let i=0; i<5; i++) {
+                estrellasHTML += (i < puntos) ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+            }
+
+            const nuevaResena = `
+            <div class="mb-4 opinion-item" style="animation: fadeIn 1s;">
+                <div class="d-flex align-items-center mb-1">
+                    <i class="fas fa-user-circle fa-2x text-info mr-2"></i>
+                    <span class="text-dark font-weight-bold small ml-2">Tú (Usuario UTEC)</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                    <span class="text-warning small mr-2">${estrellasHTML}</span>
+                    <strong class="text-dark" style="font-size: 0.95rem;">${titulo}</strong>
+                </div>
+                <p class="text-muted small mb-2">Calificado justo ahora <br><span class="text-danger">Compra Verificada</span></p>
+                <p class="text-dark" style="font-size: 0.95rem;">${texto}</p>
+            </div>`;
+
+            document.getElementById('listaOpiniones').insertAdjacentHTML('afterbegin', nuevaResena);
+            $('#modalOpinion').modal('hide');
+            document.getElementById('inputTituloResena').value = '';
+            document.getElementById('inputTextResena').value = '';
+            alert("¡Tu opinión se ha publicado exitosamente en la página!");
+        }
+    </script>
+}

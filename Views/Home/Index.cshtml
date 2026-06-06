@@ -1,0 +1,205 @@
+﻿@model IEnumerable<Sistema_Bibliotecario_BIBLIO_UTEC.Models.Libro>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<style>
+    /* COMPACTACIÓN DE LA TOOLBAR AZUL ACCESOS */
+    .amazon-toolbar { background-color: #232f3e; min-height: 38px; margin-top: 0px !important; padding: 6px 25px; width: 100vw; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); }
+    .toolbar-link { color: white !important; font-size: 0.85rem; font-weight: 500; margin-right: 25px; text-decoration: none !important; }
+    .toolbar-link:hover { color: #febd69 !important; }
+
+    /* CONTENEDOR BLANCO ESTILO ESTANTE */
+    .shelf-container-amazon { background-color: white; padding: 30px 60px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 25px; margin-bottom: 20px; position: relative; }
+    .shelf-title-amazon { font-size: 1.3rem; font-weight: 700; color: #111; margin-bottom: 20px; }
+
+    /* DISEÑO DE TARJETAS COMPLETAS */
+    .book-card-amazon { text-align: left; transition: transform 0.2s; border: 1px solid #ddd !important; border-radius: 4px; }
+    .book-card-amazon:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; }
+    .book-cover-img { height: 200px; width: 100%; object-fit: contain; background-color: #f8f9fa; }
+    
+    /* ENLACES ESTILO AMAZON */
+    .text-amazon-blue { color: #007185; cursor: pointer; text-decoration: none; }
+    .text-amazon-blue:hover { color: #c45500; text-decoration: underline; }
+
+    /* MINI TARJETAS (HISTORIAL) */
+    .history-item-carousel { text-align: center; padding: 5px; transition: transform 0.2s; }
+    .history-item-carousel:hover { transform: translateY(-3px); }
+    .history-cover-img { height: 120px; width: 80px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 2px; display: inline-block; }
+
+    /* BOTONES DE FLECHAS */
+    .carousel-control-prev, .carousel-control-next { width: 45px; background-color: rgba(255,255,255,0.95); border: 1px solid #d5d9d9; height: 80px; top: 35%; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); opacity: 1 !important; z-index: 10; }
+    .carousel-control-prev:hover, .carousel-control-next:hover { background-color: #f7fafa; border-color: #a2a6a6; }
+    .carousel-control-prev { left: 5px; }
+    .carousel-control-next { right: 5px; }
+    .carousel-arrow-icon { color: #0f1111; font-size: 1.3rem; line-height: 80px; }
+    
+    /* BOTÓN CARRITO */
+    .btn-add-cart { background-color: #ffd814; border-color: #fcd200; color: #0f1111; border-radius: 50px; font-size: 0.8rem; }
+    .btn-add-cart:hover { background-color: #f7ca00; border-color: #f2c200; }
+</style>
+
+<div class="amazon-toolbar d-flex align-items-center">
+    <a href="/Catalog/Index" class="toolbar-link"><i class="fas fa-search mr-1"></i> Explorar Catálogo Inteligente</a>
+    <a href="/Prestamos/MisPrestamos" class="toolbar-link"><i class="fas fa-history mr-1"></i> Mis Préstamos y Devoluciones</a>
+</div>
+
+<div class="container-fluid px-4 pb-5">
+    
+    <div class="shelf-container-amazon">
+        <h4 class="shelf-title-amazon">Novedades en Ciencias Exactas</h4>
+        <div id="carouselCiencias" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" class="card-img-top p-3 book-cover-img" alt="Clean Code"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">Clean Code</h6></a>
+                                    <p class="card-text text-muted small mb-1">Robert C. Martin</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                    <strong class="d-block mb-2">US$ 14.99</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780201835953-L.jpg" class="card-img-top p-3 book-cover-img" alt="Mythical Man-Month"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">Mythical Man-Month</h6></a>
+                                    <p class="card-text text-muted small mb-1">Frederick P. Brooks</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                                    <strong class="d-block mb-2">US$ 12.50</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselCiencias" role="button" data-slide="prev"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+            <a class="carousel-control-next" href="#carouselCiencias" role="button" data-slide="next"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+        </div>
+    </div>
+
+    <div class="shelf-container-amazon">
+        <h4 class="shelf-title-amazon">Los más prestados esta semana</h4>
+        <div id="carouselMasPrestados" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780486490335-L.jpg" class="card-img-top p-3 book-cover-img" alt="Space Mathematics"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">Space Mathematics</h6></a>
+                                    <p class="card-text text-muted small mb-1">F. J. Weyl</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                    <strong class="d-block mb-2">US$ 24.99</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780131103627-L.jpg" class="card-img-top p-3 book-cover-img" alt="C Programming"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">C Programming</h6></a>
+                                    <p class="card-text text-muted small mb-1">Brian W. Kernighan</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    <strong class="d-block mb-2">US$ 30.00</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselMasPrestados" role="button" data-slide="prev"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+            <a class="carousel-control-next" href="#carouselMasPrestados" role="button" data-slide="next"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+        </div>
+    </div>
+
+    <div class="shelf-container-amazon">
+        <h4 class="shelf-title-amazon">Explora Literatura y Ficción</h4>
+        <div id="carouselFiccion" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg" class="card-img-top p-3 book-cover-img" alt="1984"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">1984</h6></a>
+                                    <p class="card-text text-muted small mb-1">George Orwell</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    <strong class="d-block mb-2">US$ 9.99</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3">
+                            <div class="card h-100 border-0 shadow-sm book-card-amazon">
+                                <a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780060935467-L.jpg" class="card-img-top p-3 book-cover-img" alt="To Kill a Mockingbird"></a>
+                                <div class="card-body d-flex flex-column p-2">
+                                    <a href="/Catalog/Detalles" class="text-decoration-none"><h6 class="card-title text-truncate mb-0 text-amazon-blue">To Kill a Mockingbird</h6></a>
+                                    <p class="card-text text-muted small mb-1">Harper Lee</p>
+                                    <div class="text-warning mb-1" style="font-size: 0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                    <strong class="d-block mb-2">US$ 11.50</strong>
+                                    <button class="btn btn-add-cart mt-auto fw-bold w-100 shadow-sm">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                        <div class="col-lg-2 col-md-4 col-6 mb-3"><div class="card h-100 border-0 book-card-amazon"><div class="card-body"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselFiccion" role="button" data-slide="prev"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+            <a class="carousel-control-next" href="#carouselFiccion" role="button" data-slide="next"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+        </div>
+    </div>
+
+    <div class="shelf-container-amazon" style="padding: 20px 60px;">
+        <h4 class="shelf-title-amazon" style="font-size: 1.1rem;">Inspirado en tu historial de búsqueda</h4>
+        <div id="carouselHistorial" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780439136358-M.jpg" class="history-cover-img" alt="Harry Potter"></a></div>
+                        <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780156012195-M.jpg" class="history-cover-img" alt="El Principito"></a></div>
+                        <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9780618260300-M.jpg" class="history-cover-img" alt="El Hobbit"></a></div>
+                        <div class="col-md-1 col-4 history-item-carousel"><a href="/Catalog/Detalles"><img src="https://covers.openlibrary.org/b/isbn/9788420412146-M.jpg" class="history-cover-img" alt="Don Quijote"></a></div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselHistorial" role="button" data-slide="prev" style="height: 60px; top: 20%;"><span class="carousel-arrow-icon"><i class="fas fa-chevron-left"></i></span></a>
+            <a class="carousel-control-next" href="#carouselHistorial" role="button" data-slide="next" style="height: 60px; top: 20%;"><span class="carousel-arrow-icon"><i class="fas fa-chevron-right"></i></span></a>
+            @foreach (var libro in Model) 
+{
+    <div class="card">
+        <img src="@libro.PortadaUrl" alt="@libro.Titulo">
+        <div class="card-body">
+            <h5>@libro.Titulo</h5>
+            <a href="@Url.Action("Detalles", "Catalog", new { isbn = libro.Isbn })" 
+               class="btn btn-primary">Ver Detalles</a>
+        </div>
+    </div>
+}
+        </div>
+    </div>
+
+</div>

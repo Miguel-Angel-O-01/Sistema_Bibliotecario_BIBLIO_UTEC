@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Sistema_Bibliotecario_BIBLIO_UTEC.Models.Libro>
+
+@{
+    ViewData["Title"] = "Panel de Inventario - Admin";
+}
+
+<div class="container mt-4">
+    <!-- BARRA DE ACCESOS SECUNDARIA ESTILO AMAZON -->
+    <div class="row align-items-center mb-4 bg-white p-3 shadow-sm rounded">
+        <div class="col-md-8">
+            <h4 class="font-weight-bold text-dark mb-0">🛠️ Panel de Control de Inventario</h4>
+            <p class="text-muted small mb-0">Control de existencias locales y alimentación automática mediante ISBN</p>
+        </div>
+        <div class="col-md-4 text-md-right mt-2 mt-md-0">
+            <!-- Botón que abre la ventana flotante de Google Books -->
+            <button type="button" class="btn btn-warning font-weight-bold shadow-sm" data-toggle="modal" data-target="#modalIsbn" style="background-color: #febd69; border: 1px solid #a88734;">
+                <i class="fas fa-plus mr-1"></i> Importar Libro por ISBN
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTROL DE NOTIFICACIONES DE ÉXITO O ERROR -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show small" role="alert">
+            <strong>⚠️ Alerta:</strong> @TempData["Error"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show small" role="alert">
+            <strong>✅ Éxito:</strong> @TempData["Exito"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- TABLA CENTRAL DE INVENTARIO -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light bg-light">
+                    <tr>
+                        <th class="pl-4">Portada</th>
+                        <th>Título / Autor</th>
+                        <th>ISBN</th>
+                        <th>Categoría</th>
+                        <th class="text-center">Existencias Totales</th>
+                        <th class="text-center pr-4">Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center p-5 text-muted">
+                                <i class="fas fa-box-open fa-3x mb-3 text-secondary opacity-50"></i>
+                                <p class="lead mb-0">No hay libros registrados en tu base de datos SQLite.</p>
+                                <small>Haz clic en el botón superior amarillo para sembrar tu primer ejemplar desde la API de Google.</small>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var libro in Model)
+                        {
+                            <tr>
+                                <td class="pl-4">
+                                    <img src="https://openlibrary.org" class="img-thumbnail" style="width: 45px; height: 60px; object-fit: cover;" onerror="this.src='https://placehold.co';">
+                                </td>
+                                <td>
+                                    <strong class="text-dark d-block">@libro.Titulo</strong>
+                                    <small class="text-muted">✍️ @libro.Autor</small>
+                                </td>
+                                <td><code class="text-primary font-weight-bold">@libro.Isbn</code></td>
+                                <td><span class="badge badge-secondary p-2">@libro.Categoria</span></td>
+                                <td class="text-center font-weight-bold">@libro.StockTotal</td>
+                                <td class="text-center pr-4">
+                                    <span class="badge badge-success p-2">@libro.StockDisponible unidades</span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- VENTANA MODAL FLOTANTE (FORMULARIO ASISTENTE ISBN)                       -->
+<!-- ========================================================================= -->
+<div class="modal fade" id="modalIsbn" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 4px;">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title font-weight-bold"><i class="fas fa-satellite-dish mr-2 text-warning"></i> Sincronizador Google Books</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/Admin/AgregarLibroPorIsbn" method="POST">
+                @Html.AntiForgeryToken()
+                <div class="modal-body py-4">
+                    <p class="small text-secondary mb-3">
+                        Digita el código de barras ISBN (10 o 13 números) del libro. El sistema descargará la ficha técnica completa y la inyectará en SQLite de forma automatizada.
+                    </p>
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold text-dark small">Código ISBN del Ejemplar</label>
+                        <input type="text" name="isbn" class="form-control form-control-lg text-center"
+                               placeholder="Ej: 9788445000663" minlength="10" maxlength="13" required
+                               style="letter-spacing: 3px; font-weight: bold; font-family: monospace; border-color: #febd69;" />
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-warning btn-sm font-weight-bold" style="background-color: #febd69; border-color: #a88734; color: #111;">
+                        🚀 Buscar e Indexar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

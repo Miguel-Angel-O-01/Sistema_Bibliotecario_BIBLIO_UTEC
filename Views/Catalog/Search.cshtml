@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Sistema_Bibliotecario_BIBLIO_UTEC.Models.Libro>
+@{
+    ViewData["Title"] = "Resultados de búsqueda";
+}
+
+<div class="container mt-4 mb-5">
+    <h3 class="mb-4">Resultados para: <span class="text-warning">"@ViewBag.Busqueda"</span></h3>
+    <hr />
+    
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center p-5">
+            <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+            <h5>No se encontraron libros en el catálogo local.</h5>
+            <p>Intenta usar términos más generales o verifica la ortografía.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var libro in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="@(string.IsNullOrEmpty(libro.PortadaUrl) ? "https://via.placeholder.com/150x200?text=Sin+Portada" : libro.PortadaUrl)" class="card-img-top" alt="@libro.Titulo" style="height: 280px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title text-truncate" title="@libro.Titulo">@libro.Titulo</h6>
+                            <p class="card-text small text-muted mb-3">@libro.Autor</p>
+                            
+                            <a href="/Catalog/Detalles?id=@libro.Id" class="btn btn-warning btn-sm w-100 mt-auto shadow-sm">
+                                Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null; // Pantalla independiente para el Admin
+    ViewData["Title"] = "Panel de Control - Admin";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: "Segoe UI", Arial, sans-serif; overflow-x: hidden; }
+        .sidebar { min-height: 100vh; background-color: #232f3e; color: white; padding-top: 20px; }
+        .sidebar a { color: #ccc; text-decoration: none; display: block; padding: 12px 20px; font-weight: 500; }
+        .sidebar a:hover, .sidebar a.active { background-color: #131921; color: #fff; border-left: 4px solid #febd69; }
+        .top-card { border: none; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .card-icon { font-size: 2.5rem; opacity: 0.2; position: absolute; right: 20px; top: 20px; }
+        .table-hover tbody tr:hover { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid p-0">
+    <div class="row m-0">
+        <div class="col-md-2 p-0 sidebar d-none d-md-block">
+            <h4 class="text-center font-weight-bold text-white mb-4">ADMIN<span style="color:#febd69;">UTEC</span></h4>
+            <a href="#" class="active"><i class="fas fa-chart-line mr-2"></i> Dashboard</a>
+            <a href="#"><i class="fas fa-book mr-2"></i> Inventario de Libros</a>
+            <a href="#"><i class="fas fa-exchange-alt mr-2"></i> Préstamos Activos</a>
+            <a href="#"><i class="fas fa-users mr-2"></i> Estudiantes</a>
+            <a href="/Account/Login" class="text-danger mt-5"><i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión</a>
+        </div>
+
+        <div class="col-md-10 p-4">
+            <h3 class="font-weight-bold text-dark mb-4">Resumen General</h3>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card top-card bg-white p-3 position-relative">
+                        <i class="fas fa-book text-primary card-icon"></i>
+                        <h6 class="text-muted font-weight-bold">TOTAL LIBROS (STOCK)</h6>
+                        <h2 class="mb-0 text-dark">1,245</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card top-card bg-white p-3 position-relative">
+                        <i class="fas fa-hand-holding-usd text-warning card-icon"></i>
+                        <h6 class="text-muted font-weight-bold">PRÉSTAMOS ACTIVOS</h6>
+                        <h2 class="mb-0 text-dark">34</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card top-card bg-white p-3 position-relative">
+                        <i class="fas fa-exclamation-triangle text-danger card-icon"></i>
+                        <h6 class="text-muted font-weight-bold">MULTAS ACUMULADAS</h6>
+                        <h2 class="mb-0 text-dark">US$ 45.00</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded">
+                <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-list-alt mr-2"></i> Solicitudes de Préstamo Recientes</h5>
+                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-sync-alt"></i> Actualizar</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 text-center align-middle">
+                            <thead class="bg-light text-muted">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Estudiante</th>
+                                    <th>Libro Solicitado</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-dark">
+                                <tr>
+                                    <td class="font-weight-bold">#1001</td>
+                                    <td>Juan Pérez <br><small class="text-muted">25-1234-2026</small></td>
+                                    <td>Space Mathematics</td>
+                                    <td>Hoy, 10:30 AM</td>
+                                    <td><span class="badge badge-warning p-2">Pendiente</span></td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm mx-1" onclick="alert('Préstamo Aprobado')"><i class="fas fa-check"></i> Aprobar</button>
+                                        <button class="btn btn-danger btn-sm mx-1"><i class="fas fa-times"></i> Rechazar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">#1000</td>
+                                    <td>María López <br><small class="text-muted">25-9876-2026</small></td>
+                                    <td>Clean Code</td>
+                                    <td>Ayer, 02:15 PM</td>
+                                    <td><span class="badge badge-info p-2">Prestado (Activo)</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm mx-1" onclick="alert('Libro marcado como devuelto en inventario')"><i class="fas fa-undo"></i> Marcar Devuelto</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

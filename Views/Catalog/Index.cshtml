@@ -1,0 +1,161 @@
+﻿@model IEnumerable<Sistema_Bibliotecario_BIBLIO_UTEC.Models.Libro>
+
+@{
+    ViewData["Title"] = "Catálogo de Libros";
+}
+
+<style>
+    /* BOTONES DE CATEGORÍAS ESTILO CANVA (AMARILLOS REDONDEADOS) */
+    .btn-categoria-canva {
+        background-color: #ffcc00;
+        color: #111 !important;
+        font-weight: bold;
+        border-radius: 50px; /* Hace el botón completamente ovalado */
+        border: 2px solid #e6b800;
+        padding: 10px 20px;
+        margin-bottom: 12px;
+        text-align: center;
+        display: block;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-decoration: none !important;
+    }
+
+        .btn-categoria-canva:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
+    
+    /* GRILLA DE PORTADAS FLUIDA */
+    .grid-libros-api {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .portada-libro-contenedor {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+        .portada-libro-contenedor:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+    
+    /* EFECTO HOVER PARA VER DETALLES Y AÑADIR AL CARRITO */
+    .overlay-carrito {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(19, 25, 33, 0.85); /* Fondo oscuro Amazon */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .portada-libro-contenedor:hover .overlay-carrito {
+        opacity: 1;
+    }
+</style>
+
+<div class="row mt-3">
+    <!-- COLUMNA IZQUIERDA: CATEGORÍAS (BORDES AMARILLOS OVALADOS) -->
+    <div class="col-md-2">
+        <h5 class="font-weight-bold text-dark mb-3 px-2">Categorías</h5>
+        <a href="#" class="btn-categoria-canva">Todos</a>
+        <a href="#" class="btn-categoria-canva">Ingeniería</a>
+        <a href="#" class="btn-categoria-canva">Ciencias</a>
+        <a href="#" class="btn-categoria-canva">Literatura</a>
+        <a href="#" class="btn-categoria-canva">Historia</a>
+    </div>
+
+    <!-- COLUMNA DERECHA: GRILLA DE LIBROS DINÁMICA -->
+    <div class="col-md-10">
+        <!-- Contenedor raíz para Algolia -->
+        <div id="hits"></div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- JAVASCRIPT DE ALGOLIA UI PARA RENDERIZAR LA IMAGEN EXACTA                -->
+<!-- ========================================================================= -->
+@section Scripts {
+    <script src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net"></script>
+
+    <script>
+        const searchClient = algoliasearch('P3VLPYC5YC', '1a234417a9f9eada15677a61185b1804');
+
+        const search = instantsearch({
+        indexName: 'catalogo_libros',
+        searchClient,
+        });
+
+        search.addWidgets([
+        // Conecta el buscador que está arriba en tu Navbar del Layout
+        instantsearch.widgets.searchBox({
+        container: '#searchbox',
+        placeholder: 'Busca libros en tiempo real...',
+        showReset: false,
+        showSubmit: false,
+        cssClasses: {
+        input: 'form-control txt-amazon w-100'
+        }
+        }),
+
+        // Dibuja la grilla fluida idéntica a tu imagen de Canva
+        instantsearch.widgets.hits({
+        container: '#hits',
+        cssClasses: {
+        root: 'w-100',
+        list: 'grid-libros-api list-unstyled' /* Aplica los estilos CSS de grilla fluida */
+        },
+        templates: {
+        item: `
+        <div class="portada-libro-contenedor">
+        <!-- API de Open Library renderizando portadas en tiempo real por el ISBN indexado -->
+        <img src="https://openlibrary.org{{Isbn}}-M.jpg"
+        class="img-fluid w-100"
+        style="height: 210px; object-fit: cover;"
+        onerror="this.src='https://placehold.co';">
+                            
+        <!-- Capa oculta que aparece al pasar el cursor (Hover) para no romper la estética limpia -->
+        <div class="overlay-carrito">
+        <h6 class="text-white font-weight-bold small mb-1 text-truncate w-100">{{Titulo}}</h6>
+        <p class="text-warning small mb-2" style="font-size: 0.75rem;">{{Autor}}</p>
+                                
+        <form action="/Cart/AgregarAlCarrito" method="POST" class="w-100 px-1">
+        <input type="hidden" name="libroId" value="{{objectID}}">
+        <button type="submit" class="btn btn-warning btn-sm btn-block font-weight-bold"
+        style="background-color: #febd69; border: none; font-size: 0.75rem; border-radius: 3px;">
+        🛒 Añadir
+        </button>
+        </form>
+        </div>
+        </div>
+        `,
+        empty: `
+        <div class="text-center p-5 bg-white rounded border w-100">
+        <p class="lead text-muted mb-0">No encontramos resultados para tu búsqueda. 🔍</p>
+        </div>
+        `
+        }
+        })
+        ]);
+
+        search.start();
+    </script>
+}

@@ -1,0 +1,282 @@
+﻿@using Sistema_Bibliotecario_BIBLIO_UTEC.Models
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Biblio-UTEC | Catálogo Digital</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body { background-color: #eaeded; }
+        .nav-amazon { background-color: #131921; padding: 10px 20px; min-height: 60px; }
+        .logo-utec { color: white; font-weight: bold; font-size: 1.5rem; text-decoration: none !important; margin-right: 20px; }
+        .logo-utec:hover { color: #febd69; text-decoration: none !important; }
+        .amazon-search-container { flex-grow: 1; max-width: 800px; display: flex; }
+        
+        .txt-amazon { border-radius: 0; border: none; padding: 10px 15px; height: 40px; }
+        .btn-amazon { background-color: #febd69; border: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding: 0 20px; cursor: pointer; color: #333; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .btn-amazon:hover { background-color: #f3a847; color: #333; text-decoration: none; }
+        
+        /* Botón de categorías */
+        .btn-categories { background-color: #f3f3f3; color: #555; border: 1px solid #ccc; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 0.85rem; padding: 0 15px; height: 40px; display: flex; align-items: center; justify-content: center; border-right: 1px solid #cdcdcd; }
+        .btn-categories:hover { background-color: #dadada; color: #333; }
+
+        .nav-right-item { color: white; padding: 0 12px; cursor: pointer; font-size: 0.9rem; line-height: 1.2; }
+        .nav-right-item:hover { text-decoration: none; color: white; }
+        .nav-right-item small { display: block; font-size: 0.75rem; color: #ccc; }
+        
+        .footer-stryle-amazon { background-color: #232f3e; color: white; padding: 30px 0; margin-top: 50px; text-align: center; font-size: 0.9rem; }
+
+        /* Efecto Desplegable */
+        .nav-amazon-dropdown { position: relative; display: inline-block; }
+        .amazon-dropdown-content { display: none; position: absolute; right: 0; background-color: #ffffff; min-width: 450px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 9999; border-radius: 4px; padding: 20px; border: 1px solid #ddd; margin-top: 5px; }
+        .amazon-dropdown-content::before { content: ""; position: absolute; top: -10px; right: 40px; border-width: 0 10px 10px 10px; border-style: solid; border-color: transparent transparent #ffffff transparent; }
+        .nav-amazon-dropdown:hover .amazon-dropdown-content { display: block; }
+        
+        .dropdown-title-column { font-size: 1rem; font-weight: bold; color: #111; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .dropdown-link-item { display: block; color: #444 !important; font-size: 0.85rem; padding: 4px 0; text-decoration: none !important; }
+        .dropdown-link-item:hover { color: #c45500 !important; text-decoration: underline !important; }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <nav class="nav-amazon d-flex align-items-center justify-content-between w-100 px-4">
+    
+        <a href="/" class="logo-utec">BIBLIO-UTEC</a>
+
+        <div class="amazon-search-container mx-3">
+            <form id="search-form" class="w-100" action="/Catalog/Search" method="GET">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <button class="btn btn-categories dropdown-toggle" type="button" data-toggle="dropdown">Todos</button>
+        </div>
+        
+        <input type="text" name="q" class="form-control txt-amazon border-0" placeholder="Busca libros por título o autor..." required>
+        
+        <div class="input-group-append">
+            <button class="btn-amazon" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</form>
+        </div>
+
+        <div class="d-flex align-items-center flex-nowrap" style="gap: 5px;">
+        
+            <div class="nav-amazon-dropdown">
+                @if (Context.Session.GetString("UsuarioEmail") != null)
+                {
+                    <div class="nav-right-item">
+                        <small>Hola, @Context.Session.GetString("UsuarioNombre")</small>
+                        <strong>Cuenta y Listas <i class="fas fa-caret-down text-muted small"></i></strong>
+                    </div>
+                
+                    <div class="amazon-dropdown-content" style="min-width: 320px;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="dropdown-title-column">Mi Cuenta</div>
+                                <a href="/Prestamos/MisPrestamos" class="dropdown-link-item" style="font-weight: bold;">📋 Mis Préstamos Activos</a>
+                                <a href="/Account/Perfil" class="dropdown-link-item">⚙️ Configuración de Perfil</a>
+                                <a href="/Account/Logout" class="dropdown-link-item text-danger mt-2 d-block" style="font-weight: bold;">❌ Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="nav-right-item">
+                        <small>Hola, Identifícate</small>
+                        <strong>Cuenta y Listas <i class="fas fa-caret-down text-muted small"></i></strong>
+                    </div>
+                
+                    <div class="amazon-dropdown-content" style="min-width: 220px; padding: 15px;">
+                        <a href="/Account/Login" class="btn btn-warning w-100 font-weight-bold btn-sm shadow-sm py-2"
+                               style="background: linear-gradient(to bottom, #f7dfa5, #f0c14b); border: 1px solid #a88734; border-radius: 3px; color: #111; font-size: 0.85rem;">
+                            Identifícate
+                        </a>
+                        <div class="text-center mt-2">
+                            <small>¿Eres un estudiante nuevo? <a href="/Account/Register">Empieza aquí.</a></small>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <a href="/Prestamos/MisPrestamos" class="nav-right-item text-decoration-none mx-3">
+            <small class="d-block" style="font-size: 0.75rem; color: #ccc;">Devoluciones</small>
+            <strong style="color: white;">y Pedidos</strong>
+            </a>
+
+            <div class="nav-amazon-dropdown mr-2">
+    <div class="nav-right-item text-decoration-none d-flex align-items-end">
+        <span class="mr-1" style="font-size: 1.2rem;">🇺🇸</span>
+        <strong>ES <i class="fas fa-caret-down text-muted small"></i></strong>
+    </div>
+    <div class="amazon-dropdown-content" style="min-width: 200px; padding: 15px;">
+        <div class="form-check mb-2">
+                             <input class="form-check-input" type="radio" name="idioma" id="langES" checked>
+                            <label class="form-check-label small" for="langES">Español - ES</label>
+                            </div>
+                        <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="idioma" id="langEN">
+                        <label class="form-check-label small" for="langEN">English - EN</label>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                      <small class="text-muted">La traducción oficial se maneja vía ASP.NET Core Localization.</small>
+                   </div>
+                 </div>
+            <div class="nav-amazon-dropdown">
+                <a href="/Checkout/Pago" class="nav-right-item text-decoration-none d-flex align-items-end" id="nav-cart">
+                    <div class="position-relative d-flex align-items-center">
+                        <i class="fas fa-shopping-basket fa-lg" style="color: white;"></i>
+                        <span class="badge badge-warning position-absolute" style="top: -12px; right: -12px; border-radius: 50px; font-size: 0.7rem; background-color: #febd69; color: #111; padding: 3px 6px;">
+                            @(Context.Session.Get<Carrito>("Carrito")?.Items?.Count ?? 0)
+                        </span>
+                    </div>
+                    <strong class="ml-2 d-none d-sm-inline" style="font-size: 0.9rem; color: white;">Carrito</strong>
+                </a>
+
+                <div class="amazon-dropdown-content" style="min-width: 350px; padding: 15px;">
+    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+        <span style="font-size: 1.1rem;">Subtotal: <strong>US$ <span id="subtotalCarritoNav">0.00</span></strong></span>
+        <a href="/Checkout/Pago" class="text-info small">Ver carrito completo</a>
+    </div>
+
+    <div id="listaItemsCarrito">
+        <div class="text-center py-4 text-muted" id="mensajeCarritoVacio">
+            <i class="fas fa-shopping-basket fa-2x mb-2 text-light"></i>
+            <p class="mb-0 small">Tu carrito de Biblio-UTEC está vacío.</p>
+        </div>
+    </div>
+
+    <a href="/Checkout/Pago" class="btn btn-warning w-100 font-weight-bold shadow-sm mt-3" style="background-color: #ffd814; border-color: #fcd200; border-radius: 8px;">
+        Proceder al pago
+    </a>
+</div>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="w-100 m-0 p-0">
+        @RenderBody()
+    </div>
+
+    <footer class="footer-stryle-amazon">
+        <div class="container">
+            <p>PROYECTO PROGRAMACION II - GRUPO 03</p>
+            <small>&copy; 2026 Universidad Tecnológica - Sistema de Gestión Bibliotecaria</small>
+        </div>
+    </footer>
+
+    <style>
+    .algolia-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 0 0 4px 4px;
+        z-index: 1000;
+        max-height: 400px;
+        overflow-y: auto;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        display: none;
+    }
+    .algolia-item {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        text-decoration: none;
+        color: #333;
+    }
+    .algolia-item:hover {
+        background: #f8f9fa;
+        text-decoration: none;
+        color: #c45500;
+    }
+    .algolia-item img {
+        width: 40px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script>
+    // Inicializar Algolia con tus credenciales
+    const client = algoliasearch('P3VLPYC5YC', '1a234417a9f9eada15677a61185b1804');
+    
+    // CORRECCIÓN: El índice ahora coincide exactamente con el de C#
+    const index = client.initIndex('catalogo_libros');
+
+    // Preparar el contenedor flotante
+    const searchInput = document.getElementById('search-input');
+    const searchContainer = searchInput.parentElement;
+    searchContainer.style.position = 'relative';
+    
+    const dropdown = document.createElement('div');
+    dropdown.className = 'algolia-dropdown';
+    searchContainer.appendChild(dropdown);
+
+    // Escuchar lo que escribe el usuario
+    searchInput.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        if(query.length > 2) {
+            index.search(query).then(({ hits }) => {
+                dropdown.innerHTML = ''; // Limpiar resultados anteriores
+                
+                if(hits.length > 0) {
+                    hits.forEach(hit => {
+                        const item = document.createElement('a');
+                        item.href = '/Catalog/Detalles?id=' + hit.objectID; 
+                        item.className = 'algolia-item';
+                        
+                        // CORRECCIÓN: Uso de mayúsculas idénticas a las de C#
+                        item.innerHTML = `
+                            <img src="${hit.PortadaUrl || 'https://via.placeholder.com/40x60?text=Sin+Tapa'}" alt="Portada">
+                            <div>
+                                <strong class="d-block text-truncate" style="max-width: 250px;">${hit.Titulo}</strong>
+                                <small class="text-muted d-block">${hit.Autor}</small>
+                                <span class="badge badge-warning text-dark mt-1">${hit.Categoria}</span>
+                            </div>
+                        `;
+                        dropdown.appendChild(item);
+                    });
+                    dropdown.style.display = 'block';
+                } else {
+                    dropdown.style.display = 'none';
+                }
+            });
+        } else {
+            dropdown.style.display = 'none';
+        }
+    });
+    // Manejar la tecla Enter y el clic en la lupa
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita que la página se recargue en blanco
+        
+        const query = searchInput.value;
+        if(query.trim().length > 0) {
+            // Redirige a una vista completa de resultados (que crearemos en el CatalogController)
+            window.location.href = '/Catalog/Search?q=' + encodeURIComponent(query);
+        }
+    });
+    // Cerrar el menú si el usuario hace clic afuera de la barra
+    document.addEventListener('click', function(e) {
+        if(!searchContainer.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+</script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

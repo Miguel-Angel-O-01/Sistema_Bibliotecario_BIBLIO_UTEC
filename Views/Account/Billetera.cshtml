@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Mi Billetera Digital";
+}
+
+<style>
+    .wallet-card { border: 1px solid #d5d9d9; border-radius: 8px; padding: 20px; transition: transform 0.2s; }
+    .wallet-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-3px); }
+    .cc-logo { font-size: 2.5rem; }
+    .btn-amazon-yellow { background-color: #ffd814; border-color: #fcd200; border-radius: 8px; font-weight: 500; }
+    .btn-amazon-yellow:hover { background-color: #f7ca00; }
+</style>
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="font-weight-bold">Mi Billetera y Pagos</h2>
+        <button class="btn btn-amazon-yellow shadow-sm px-4" data-toggle="modal" data-target="#modalAgregarTarjeta">
+            <i class="fas fa-plus mr-2"></i> Agregar método de pago
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="wallet-card bg-white shadow-sm h-100 position-relative">
+                <span class="badge badge-success position-absolute" style="top: 15px; right: 15px;">Predeterminada</span>
+                <div class="d-flex align-items-center mb-3 text-primary cc-logo">
+                    <i class="fab fa-cc-visa"></i>
+                </div>
+                <h5 class="mb-1 font-weight-bold text-dark">Visa terminada en 4242</h5>
+                <p class="text-muted small mb-3">Expira en: 12/2028</p>
+                <p class="text-muted small mb-0">Nombre: @(Context.Session.GetString("UsuarioNombre") ?? "Estudiante")</p>
+                <div class="mt-3 pt-3 border-top d-flex justify-content-between">
+                    <a href="#" class="text-info small">Editar</a>
+                    <a href="#" class="text-danger small">Eliminar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="wallet-card bg-white shadow-sm h-100">
+                <div class="d-flex align-items-center mb-3 text-warning cc-logo">
+                    <i class="fab fa-cc-mastercard"></i>
+                </div>
+                <h5 class="mb-1 font-weight-bold text-dark">Mastercard terminada en 5555</h5>
+                <p class="text-muted small mb-3">Expira en: 08/2027</p>
+                <p class="text-muted small mb-0">Nombre: @(Context.Session.GetString("UsuarioNombre") ?? "Estudiante")</p>
+                <div class="mt-3 pt-3 border-top d-flex justify-content-between">
+                    <a href="#" class="text-info small">Editar</a>
+                    <a href="#" class="text-danger small">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAgregarTarjeta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold"><i class="fas fa-lock text-success mr-2"></i> Agregar Tarjeta (Stripe Seguro)</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info small"><i class="fas fa-info-circle mr-1"></i> Tus datos están encriptados y se procesan directamente con Stripe. Biblio-UTEC no guarda los números de tu tarjeta.</div>
+                <div class="form-group">
+                    <label class="font-weight-bold small">Nombre en la tarjeta</label>
+                    <input type="text" class="form-control" placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold small">Número de tarjeta</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
+                        <div class="input-group-append"><span class="input-group-text bg-white"><i class="far fa-credit-card text-muted"></i></span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 form-group">
+                        <label class="font-weight-bold small">Expiración (MM/YY)</label>
+                        <input type="text" class="form-control" placeholder="MM/YY">
+                    </div>
+                    <div class="col-6 form-group">
+                        <label class="font-weight-bold small">CVC</label>
+                        <input type="text" class="form-control" placeholder="123">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-amazon-yellow px-4" data-dismiss="modal" onclick="alert('¡Tarjeta guardada con éxito en tu billetera!')">Guardar Tarjeta</button>
+            </div>
+        </div>
+    </div>
+</div>

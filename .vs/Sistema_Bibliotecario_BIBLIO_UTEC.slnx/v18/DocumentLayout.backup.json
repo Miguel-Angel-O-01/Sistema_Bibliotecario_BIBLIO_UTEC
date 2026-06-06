@@ -1,0 +1,299 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\controllers\\catalogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:controllers\\catalogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\views\\catalog\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:views\\catalog\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\models\\sessionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:models\\sessionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\controllers\\carritocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:controllers\\carritocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\service\\googlebooksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:service\\googlebooksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\service\\algoliasearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:service\\algoliasearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\models\\carritoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:models\\carritoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Migrations\\20260530165505_AgregarPrecio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260530165505_AgregarPrecio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\models\\libro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:models\\libro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\views\\catalog\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:views\\catalog\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|d:\\practicas_prograii\\sistema_bibliotecario_biblio_utec\\views\\checkout\\pago.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8F0B939B-EEC7-76EC-FA85-1B28896BC597}|Sistema_Bibliotecario_BIBLIO_UTEC.csproj|solutionrelative:views\\checkout\\pago.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{73068c07-fba1-453f-99ae-6edf972119b2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T17:25:23.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CarritoController.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\CarritoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CarritoController.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\CarritoController.cs",
+              "RelativeToolTip": "Controllers\\CarritoController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T17:15:53.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAwEAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T17:09:05.777Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Detalles.cshtml",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Catalog\\Detalles.cshtml",
+              "RelativeDocumentMoniker": "Views\\Catalog\\Detalles.cshtml",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Catalog\\Detalles.cshtml",
+              "RelativeToolTip": "Views\\Catalog\\Detalles.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T17:03:14.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "20260530165505_AgregarPrecio.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Migrations\\20260530165505_AgregarPrecio.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260530165505_AgregarPrecio.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Migrations\\20260530165505_AgregarPrecio.cs",
+              "RelativeToolTip": "Migrations\\20260530165505_AgregarPrecio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:55:05.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Catalog\\Search.cshtml",
+              "RelativeDocumentMoniker": "Views\\Catalog\\Search.cshtml",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Catalog\\Search.cshtml",
+              "RelativeToolTip": "Views\\Catalog\\Search.cshtml",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAcwCYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T16:42:52.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CatalogController.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\CatalogController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CatalogController.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\CatalogController.cs",
+              "RelativeToolTip": "Controllers\\CatalogController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAwCkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:41:33.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Libro.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\Libro.cs",
+              "RelativeDocumentMoniker": "Models\\Libro.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\Libro.cs",
+              "RelativeToolTip": "Models\\Libro.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:22:55.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowBcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:19:21.848Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAIwE4AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:17:48.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GoogleBooksService.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Service\\GoogleBooksService.cs",
+              "RelativeDocumentMoniker": "Service\\GoogleBooksService.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Service\\GoogleBooksService.cs",
+              "RelativeToolTip": "Service\\GoogleBooksService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAuwEQAAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T16:01:27.788Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AlgoliaSearchService.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Service\\AlgoliaSearchService.cs",
+              "RelativeDocumentMoniker": "Service\\AlgoliaSearchService.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Service\\AlgoliaSearchService.cs",
+              "RelativeToolTip": "Service\\AlgoliaSearchService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:56:57.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SessionExtensions.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\SessionExtensions.cs",
+              "RelativeDocumentMoniker": "Models\\SessionExtensions.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\SessionExtensions.cs",
+              "RelativeToolTip": "Models\\SessionExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T06:26:57.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CarritoItem.cs",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\CarritoItem.cs",
+              "RelativeDocumentMoniker": "Models\\CarritoItem.cs",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Models\\CarritoItem.cs",
+              "RelativeToolTip": "Models\\CarritoItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T06:26:49.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Pago.cshtml",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Checkout\\Pago.cshtml",
+              "RelativeDocumentMoniker": "Views\\Checkout\\Pago.cshtml",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\Views\\Checkout\\Pago.cshtml",
+              "RelativeToolTip": "Views\\Checkout\\Pago.cshtml",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAcwLkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T06:18:34.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\Practicas_PROGRAII\\Sistema_Bibliotecario_BIBLIO_UTEC\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-30T15:43:29.195Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
